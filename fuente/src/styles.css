@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Tipografías locales (funcionan sin conexión) ---------- */
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300 400;
+  font-display: swap;
+  src: url('fonts/lato-normal.woff') format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 300 400;
+  font-display: swap;
+  src: url('fonts/lato-normal-italic.woff') format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('fonts/lato-bold.woff') format('woff');
+}
+
+/* Tipografía de títulos: Latin Modern Roman Caps (licencia GUST, libre). Un solo archivo para 400 y 700: evita negrita falsa. */
+@font-face {
+  font-family: 'Titulos';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('fonts/titulos-caps.woff') format('woff');
+}
+
+html { -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: 'Lato', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  overflow-x: hidden;
+  background-color: #0b1d26;
+}
+button { touch-action: manipulation; }
+.font-cinzel { font-family: 'Titulos', 'Trajan Pro', 'Palatino Linotype', Georgia, 'Times New Roman', serif; letter-spacing: 0.02em; }
+.font-lato { font-family: 'Lato', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+
+/* Utilidades que el código usaba pero no existían en Tailwind */
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.text-shadow-lg { text-shadow: 0 4px 14px rgba(0, 0, 0, 0.55); }
+
+/* ---------- Animaciones ---------- */
+@keyframes breathe-bg {
+  0%, 100% { transform: scale(1.02); filter: brightness(1); }
+  50% { transform: scale(1.08); filter: brightness(1.2); }
+}
+.bg-breathing-effect { animation: breathe-bg 16s ease-in-out infinite; will-change: transform, filter; }
+
+@keyframes breathe-circle {
+  0%, 100% { transform: scale(1); opacity: 0.6; border-color: rgba(255,255,255,0.3); }
+  50% { transform: scale(1.5); opacity: 0.2; border-color: rgba(255,255,255,0.8); }
+}
+.breathe-animation { animation: breathe-circle 8s infinite ease-in-out; }
+
+.animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+@keyframes breathe-title {
+  0%, 100% { transform: scale(1); text-shadow: 0 4px 10px rgba(0,0,0,0.5); filter: brightness(1); }
+  50% { transform: scale(1.05); text-shadow: 0 10px 25px rgba(255,255,255,0.3); filter: brightness(1.15); }
+}
+.animate-breathe-title { animation: breathe-title 6s ease-in-out infinite; }
+
+@keyframes rainbow-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.rainbow-text {
+  background: linear-gradient(90deg, #ff9999, #ffcc99, #ffff99, #99ff99, #99ccff, #cc99ff, #ff99cc, #ff9999);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow-flow 5s linear infinite;
+  text-shadow: none !important;
+  filter: drop-shadow(0 2px 4px rgba(255,255,255,0.3));
+}
+
+/* Respeta a quien tiene activado "reducir movimiento" en su dispositivo */
+@media (prefers-reduced-motion: reduce) {
+  .bg-breathing-effect,
+  .breathe-animation,
+  .animate-breathe-title,
+  .rainbow-text,
+  .animate-fade-in { animation: none !important; }
+  .animate-fade-in { opacity: 1; }
+}
+
+/* ---------- Estilos de cristal ---------- */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+.glass-accordion-item {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+.glass-button {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+.glass-button.active {
+  background: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 15px rgba(255,255,255,0.3);
+}
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Barra de desplazamiento personalizada */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 3px; }
+
+/* Foco visible para quien navega con teclado */
+button:focus-visible, a:focus-visible {
+  outline: 2px solid #fcd34d;
+  outline-offset: 2px;
+}
